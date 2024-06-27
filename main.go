@@ -24,6 +24,7 @@ var (
 	exclude  string
 	insecure bool
 	ignore   bool
+	selected string
 )
 
 //go:embed config.json.template
@@ -37,6 +38,7 @@ func init() {
 	flag.StringVar(&exclude, "exclude", "", "urltest 排除的节点")
 	flag.BoolVar(&insecure, "insecure", false, "所有节点不验证证书")
 	flag.BoolVar(&ignore, "ignore", true, "忽略无法转换的节点")
+	flag.StringVar(&selected, "selected", "urltest", "select 默认节点")
 	flag.Parse()
 }
 
@@ -80,7 +82,7 @@ func main() {
 		}
 	}
 
-	outb, err = convert.Patch(outb, s, include, exclude, singList, tags...)
+	outb, err = convert.Patch(outb, s, include, exclude, selected, singList, tags...)
 	if err != nil {
 		panic(err)
 	}
